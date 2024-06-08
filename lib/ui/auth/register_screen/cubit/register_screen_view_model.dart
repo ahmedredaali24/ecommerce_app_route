@@ -1,0 +1,45 @@
+import 'package:bloc/bloc.dart';
+import 'package:e_commerce_route/domin/use_cases/register_use_case.dart';
+import 'package:e_commerce_route/ui/auth/register_screen/cubit/states.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../../../utils/shared_pre.dart';
+import '../../login_screen/login_screen.dart';
+
+class RegisterScreenViewModel extends Cubit<RegisterStates> {
+  RegisterScreenViewModel({required this.registerUseCase})
+      : super(RegisterInitialState());
+
+  ///logic for register
+  var formKey = GlobalKey<FormState>();
+  var nameController = TextEditingController(text: '');
+  var passwordController = TextEditingController(text: '');
+  var confirmationPasswordController = TextEditingController(text: '');
+  var emailController = TextEditingController(text:'');
+  var phoneController = TextEditingController(text: '');
+  bool isObscure = true;
+
+  bool isObscureRe = true;
+
+  RegisterUseCase registerUseCase;
+
+  void register() async {
+    emit(RegisterLoadingState());
+    var either = await registerUseCase.invoke(
+        nameController.text,
+        emailController.text,
+        passwordController.text,
+        confirmationPasswordController.text,
+        phoneController.text);
+    either.fold((l) => emit(RegisterErrorState(errorMessage: l.errorMessage)),
+            (response) => emit(RegisterSuccessState(authResultEntity: response)));
+    saveRegistrationData();
+  }
+  void saveRegistrationData() async {
+    await SharedPre.saveData(key: 'name', value: nameController.text);
+    await SharedPre.saveData(key: 'email', value: emailController.text);
+    await SharedPre.saveData(key: 'phone', value: phoneController.text);
+    await SharedPre.saveData(key: 'password', value: passwordController.text);
+
+  }
+}
