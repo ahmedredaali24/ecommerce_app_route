@@ -52,6 +52,10 @@ class GridViewCardItem extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         ProductListTabViewModel.get(context).addToFavorite(productEntity.id ?? "");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                duration: Duration(milliseconds: 500),
+                                content: Text('Saved to watchlist')));
                       },
                       icon: isWishlisted == true
                           ? const Icon(Icons.favorite_rounded)
@@ -132,6 +136,10 @@ class GridViewCardItem extends StatelessWidget {
                       //todo: add to cart
                       ProductListTabViewModel.get(context)
                           .addToCart(productEntity.id ?? "");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              duration: Duration(milliseconds: 500),
+                              content: Text('Add to Cart')));
                     },
                     splashColor: Colors.transparent,
                     child: Icon(

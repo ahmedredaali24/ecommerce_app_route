@@ -132,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               TextFormFieldItems(
                                 fieldName: 'Confirmation Password',
-                                hintText: 'enter your confirmationPassword',
+                                hintText: 'enter your rePassword',
                                 controller:
                                     viewModel.confirmationPasswordController,
                                 validator: (value) {
@@ -163,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               TextFormFieldItems(
                                 fieldName: 'Mobile Number',
-                                hintText: 'enter your mobile no',
+                                hintText: 'enter your mobile num',
                                 controller: viewModel.phoneController,
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
