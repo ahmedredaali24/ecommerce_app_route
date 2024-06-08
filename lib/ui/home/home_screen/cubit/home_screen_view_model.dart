@@ -10,7 +10,7 @@ import 'home_states.dart';
 class HomeScreenViewModel extends Cubit<HomeStates> {
   HomeScreenViewModel() : super(HomeInitialState());
 
-  int selectedIndex = 2;
+  int selectedIndex = 0;
   List<Widget> tabs = [
     HomeTapView(),
     ProductListTabView(),

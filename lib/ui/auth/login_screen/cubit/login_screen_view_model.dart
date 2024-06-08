@@ -3,6 +3,8 @@ import 'package:e_commerce_route/domin/use_cases/login_use_case.dart';
 import 'package:e_commerce_route/ui/auth/login_screen/cubit/states.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../utils/shared_pre.dart';
+
 class LoginScreenViewModel extends Cubit<LoginStates> {
   LoginScreenViewModel({required this.loginUseCase})
       : super(LoginInitialState());
@@ -18,6 +20,12 @@ class LoginScreenViewModel extends Cubit<LoginStates> {
     var either = await loginUseCase.invoke(
         emailController.text, passwordController.text);
     either.fold((l) => emit(LoginErrorState(errorMessage: l.errorMessage)),
-            (response) => emit(LoginSuccessState(authResultEntity: response)));
+        (response) => emit(LoginSuccessState(authResultEntity: response)));
+  }
+
+  void saveLoginData() async {
+    await SharedPre.saveData(key: 'email', value: emailController.text);
+
+    await SharedPre.saveData(key: 'password', value: passwordController.text);
   }
 }

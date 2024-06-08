@@ -9,17 +9,15 @@ import '../../login_screen/login_screen.dart';
 class RegisterScreenViewModel extends Cubit<RegisterStates> {
   RegisterScreenViewModel({required this.registerUseCase})
       : super(RegisterInitialState());
+  bool isObscure = true;
 
-  ///logic for register
+  bool isObscureRe = true;
   var formKey = GlobalKey<FormState>();
   var nameController = TextEditingController(text: '');
   var passwordController = TextEditingController(text: '');
   var confirmationPasswordController = TextEditingController(text: '');
-  var emailController = TextEditingController(text:'');
+  var emailController = TextEditingController(text: '');
   var phoneController = TextEditingController(text: '');
-  bool isObscure = true;
-
-  bool isObscureRe = true;
 
   RegisterUseCase registerUseCase;
 
@@ -32,14 +30,14 @@ class RegisterScreenViewModel extends Cubit<RegisterStates> {
         confirmationPasswordController.text,
         phoneController.text);
     either.fold((l) => emit(RegisterErrorState(errorMessage: l.errorMessage)),
-            (response) => emit(RegisterSuccessState(authResultEntity: response)));
+        (response) => emit(RegisterSuccessState(authResultEntity: response)));
     saveRegistrationData();
   }
+
   void saveRegistrationData() async {
     await SharedPre.saveData(key: 'name', value: nameController.text);
     await SharedPre.saveData(key: 'email', value: emailController.text);
     await SharedPre.saveData(key: 'phone', value: phoneController.text);
     await SharedPre.saveData(key: 'password', value: passwordController.text);
-
   }
 }
